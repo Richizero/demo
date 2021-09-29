@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService
-{
+public class UserService {
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -16,31 +15,35 @@ public class UserService
         this.userRepository = userRepository;
     }
 
-    public User findById(Integer id)
-    {
+    public User findById(Integer id) {
         return userRepository.findById(id).get();
     }
 
-    public List<User>findALL(){
+    public List<User> findALL() {
 
         return userRepository.findAll();
     }
 
-    public User create(User user){
+    public User create(User user) {
 
         return userRepository.save(user);
     }
-    public User update(Integer id, User user) throws Exception
-    {
+
+    public User update(Integer id, User user) throws Exception {
         User foundUser = userRepository.findById(id).get();
-        if (user != null)
-        userRepository.save(user);
-        {
+        if (foundUser != null) {
             return userRepository.save(user);
+        } else {
+            throw new Exception("usuario no encontrado");
         }
-        else
-        {
-            throw now Exception("usuario no encontrado");
+    }
+
+    public void deleteById(Integer id) throws Exception {
+        User foundUser = userRepository.findById(id).get();
+        if (foundUser != null) {
+            userRepository.deleteById(id);
+        } else {
+            throw new Exception("usuario no encontrado");
         }
     }
 }
