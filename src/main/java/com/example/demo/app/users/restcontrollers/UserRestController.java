@@ -1,3 +1,4 @@
+
 package com.example.demo.app.users.restcontrollers;
 
 
@@ -9,8 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserRestController
-{
+public class UserRestController {
     private final UserService userService;
 
     public UserRestController(UserService userService) {
@@ -18,20 +18,36 @@ public class UserRestController
     }
 
     @GetMapping("/{id}")
-    public Integer findById(@PathVariable("id")Integer id)
-    {
-        return id;
+    public User findById(@PathVariable("id") Integer id) {
+        return userService.findById(id);
     }
 
     @PostMapping
-    public User create(@RequestBody User user)
-    {
+    public User create(@RequestBody User user) {
         return userService.create(user);
     }
 
     @GetMapping
-    public List<User>findALL(){
+    public List<User> findALL() {
         return userService.findALL();
+    }
+
+    public User update(@PathVariable("id") Integer id, @RequestBody User user) {
+        try {
+            return userService.update(id, user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteByid(@PathVariable("id") Integer id) {
+        try {
+            userService.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
