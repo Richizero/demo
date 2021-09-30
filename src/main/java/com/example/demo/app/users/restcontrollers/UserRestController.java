@@ -19,7 +19,12 @@ public class UserRestController {
 
     @GetMapping("/{id}")
     public User findById(@PathVariable("id") Integer id) {
-        return userService.findById(id);
+        try {
+            return userService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @PostMapping
@@ -42,7 +47,7 @@ public class UserRestController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteByid(@PathVariable("id") Integer id) {
+    public void deleteById(@PathVariable("id") Integer id) {
         try {
             userService.deleteById(id);
         } catch (Exception e) {

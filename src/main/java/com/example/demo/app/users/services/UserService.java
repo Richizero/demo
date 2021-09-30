@@ -15,8 +15,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findById(Integer id) {
-        return userRepository.findById(id).get();
+    public User findById(Integer id) throws Exception {
+        User foundUser = userRepository.findById(id).get();
+        if (foundUser != null){
+            return foundUser;
+        } else{
+            throw new Exception("usuario no encotrado");
+        }
     }
 
     public List<User> findALL() {
