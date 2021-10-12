@@ -4,12 +4,13 @@ package com.example.demo.app.users.restcontrollers;
 
 import com.example.demo.app.users.models.User;
 import com.example.demo.app.users.services.UserService;
+import com.example.demo.utils.Router;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(Router.DOCUMENTS)
 public class UserRestController {
     private final UserService userService;
 
@@ -36,7 +37,7 @@ public class UserRestController {
     public List<User> findALL() {
         return userService.findALL();
     }
-
+    @PutMapping("/{id}")
     public User update(@PathVariable("id") Integer id, @RequestBody User user) {
         try {
             return userService.update(id, user);

@@ -2,6 +2,7 @@ package com.example.demo.app.users.services;
 
 import com.example.demo.app.users.models.User;
 import com.example.demo.app.users.repos.UserRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class UserService {
 
     public List<User> findALL() {
 
-        return userRepository.findAll();
+        return userRepository.findAll(Sort.by("userName"));
     }
 
     public User create(User user) {
