@@ -1,4 +1,4 @@
-package com.example.demo.app.documents;
+package com.example.demo.app.documents.restcontrollers;
 
 import com.example.demo.components.FileManager;
 import com.example.demo.utils.Router;
