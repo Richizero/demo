@@ -6,6 +6,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 @Entity
 @Table(name = "adm_document")
 public class Document {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "document_seq_gen")
     @SequenceGenerator(name = "document_seq_gen", sequenceName = "document_id_seq",allocationSize = 1)

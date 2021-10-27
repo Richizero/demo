@@ -9,24 +9,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 @RestController
 @RequestMapping(Router.DOCUMENTS)
 public class documentsRestController {
 
-    @Value("${bucket}")
-    private String bucket;
-
-    private FileManager fileManager;
+    private final FileManager fileManager;
 
     public documentsRestController(FileManager fileManager) {
         this.fileManager = fileManager;
     }
 
 
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public void upload(@RequestParam("file") MultipartFile multipartfile,
                        @RequestParam("name") String name){
         try {

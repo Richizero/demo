@@ -4,12 +4,11 @@ import com.example.demo.app.documents.models.Document;
 import com.example.demo.app.documents.repos.DocumentRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Service
 public class DocumentService {
-
-
     private final DocumentRepository documentRepository;
 
     public DocumentService(DocumentRepository documentRepository) {
