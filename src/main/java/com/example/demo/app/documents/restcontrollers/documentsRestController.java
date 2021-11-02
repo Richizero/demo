@@ -1,34 +1,44 @@
 package com.example.demo.app.documents.restcontrollers;
 
-import com.example.demo.components.FileManager;
+
+import com.example.demo.app.documents.services.DocumentService;
 import com.example.demo.utils.Router;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+/**
+ * restcontroller para cargar y descargar archivos
+ * @since oct 20 de 2021
+ */
 @RestController
 @RequestMapping(Router.DOCUMENTS)
 public class documentsRestController {
 
-    private final FileManager fileManager;
+    private final DocumentService documentService;
 
-    public documentsRestController(FileManager fileManager) {
-        this.fileManager = fileManager;
+
+    public documentsRestController(DocumentService documentService) {
+        this.documentService = documentService;
     }
-
-
     @PostMapping("/upload")
-    public void upload(@RequestParam("file") MultipartFile multipartfile,
-                       @RequestParam("name") String name){
+    public Integer upload(@RequestParam("file")MultipartFile multipartFile){
         try {
-            fileManager.upload(multipartfile,name);
+           return documentService.save(multipartFile);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> download(@PathVariable("id")Integer id){
+        try {
+            return documentService.download(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

@@ -4,10 +4,14 @@ import com.example.demo.app.documents.dtos.DocumentDto;
 import com.example.demo.app.documents.models.Document;
 import com.example.demo.app.documents.repos.DocumentRepository;
 import com.example.demo.components.FileManager;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+
+import java.io.IOException;
+
 
 @Service
 public class DocumentService {
@@ -19,12 +23,25 @@ public class DocumentService {
         this.fileManager = fileManager;
     }
     /**
-     * recibe un multipartfile y lo envia al filemanager para encargarlo en el filesystem
+     * recibe un multipartfile y lo envia al filemanager para cargarlo en el filesystem
+     * @param multipartFile
+     * @return
      */
-    public Integer save(MultipartFile multipartFile){
+    public Integer save(MultipartFile multipartFile) throws IOException {
         String filepath = fileManager.upload(multipartFile);
         DocumentDto documentDto = new DocumentDto();
         documentDto.setPath(filepath);
         documentDto.setFileName(multipartFile.getOriginalFilename());
+        return documentRepository.save(documentDto.toEntity()).getId();
+    }
+
+    /**
+     *devuelve el archivo, con base en el id
+     * @param id
+     * @return
+     * @throws IOException
+     */
+    public ResponseEntity<Resource> download(Integer id) throws IOException{
+        return fileManager.download(documentRepository.getById(id).getFilename());
     }
 }
