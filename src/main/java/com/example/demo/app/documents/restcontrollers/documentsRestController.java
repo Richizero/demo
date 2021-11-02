@@ -1,6 +1,7 @@
 package com.example.demo.app.documents.restcontrollers;
 
 
+import com.example.demo.app.documents.dtos.DocumentDto;
 import com.example.demo.app.documents.services.DocumentService;
 import com.example.demo.utils.ApiResponse;
 import com.example.demo.utils.Router;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -25,18 +27,31 @@ public class documentsRestController {
     public documentsRestController(DocumentService documentService) {
         this.documentService = documentService;
     }
+
+    @PostMapping("/agregar")
+    public void save(@Valid @RequestBody DocumentDto documentDto){
+
+
+    }
+    @Valid
     @PostMapping("/upload")
     public ResponseEntity<Integer> upload(@RequestParam("file")MultipartFile multipartFile){
         try {
+
+            DocumentDto documentDto = new DocumentDto();
+            documentDto.setPath((multipartFile.getOriginalFilename()));
+            documentDto.setPath(multipartFile.getOriginalFilename());
+            documentDto.setFileName(multipartFile.getOriginalFilename());
+
             apiResponse = new ApiResponse<Integer>(
                     "Archivo cargado con exito",
-                    documentService.save(multipartFile),
+                    documentService.save(multipartFile, documentDto),
                     false,
                     201
             );
-        } catch (IOException e) {
+        } catch (Exception e) {
             apiResponse = new ApiResponse<Integer>(
-                    "hubo un error en la carga del archivo",
+                    e.getMessage(),
                     null,
                     false,
                     404

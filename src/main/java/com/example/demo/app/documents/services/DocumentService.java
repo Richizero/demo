@@ -1,7 +1,6 @@
 package com.example.demo.app.documents.services;
 
 import com.example.demo.app.documents.dtos.DocumentDto;
-import com.example.demo.app.documents.models.Document;
 import com.example.demo.app.documents.repos.DocumentRepository;
 import com.example.demo.components.FileManager;
 import org.springframework.core.io.Resource;
@@ -27,9 +26,8 @@ public class DocumentService {
      * @param multipartFile
      * @return
      */
-    public Integer save(MultipartFile multipartFile) throws IOException {
+    public Integer save(MultipartFile multipartFile, DocumentDto documentDto) throws IOException {
         String filepath = fileManager.upload(multipartFile);
-        DocumentDto documentDto = new DocumentDto();
         documentDto.setPath(filepath);
         documentDto.setFileName(multipartFile.getOriginalFilename());
         return documentRepository.save(documentDto.toEntity()).getId();
