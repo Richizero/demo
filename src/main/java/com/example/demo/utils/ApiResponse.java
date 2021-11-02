@@ -2,7 +2,6 @@ package com.example.demo.utils;
 
 import org.springframework.http.ResponseEntity;
 
-import javax.persistence.criteria.CriteriaBuilder;
 
 public class ApiResponse<T> {
     private String message;
@@ -39,6 +38,7 @@ public class ApiResponse<T> {
     public Boolean getError() {
         return error;
     }
+
     public void setError(Boolean error) {
         this.error = error;
     }
